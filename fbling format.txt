@@ -1,7 +1,7 @@
 #[Name]
 #[Description]
-{function}(params):
-    ret {x}
+{function}(params):             To call a function:
+    ret {x}                     $[name]([params])
 
 -[time start]
 [r function]
