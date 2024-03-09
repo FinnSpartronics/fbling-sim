@@ -1,7 +1,6 @@
 import pygame, time, json
 pygame.init()
 
-# Set up the drawing window
 screen = pygame.display.set_mode([900, 100])
 pygame.display.set_caption("Bling")
 
@@ -70,13 +69,11 @@ segment = getCurrentSegment()
 
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 
-# Run until the user asks to quit
 running = True
 while running:
     frame += 1
     time.sleep(.05)
 
-    # Did the user click the window close button?
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -89,8 +86,6 @@ while running:
     text_surface = my_font.render(str(on-1), False, (0, 0, 0))
     screen.blit(text_surface, (0, 0))
 
-    # Flip the display
     pygame.display.flip()
 
-# Done! Time to quit.
 pygame.quit()
