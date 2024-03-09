@@ -3,12 +3,17 @@ pygame.init()
 
 screen = pygame.display.set_mode([900, 100])
 pygame.display.set_caption("Bling")
+font = pygame.font.SysFont('Comic Sans MS', 30)
+
+pixelCount = 50
+frame = 0
+on = 0
+segment = None
+running = True
 
 with open('show.json') as f:
     show = json.load(f)["segments"]
 
-pixelCount = 50
-frame = 0
 def drawPixels(func, pixels = pixelCount):
     pw = screen.get_width()/pixels
     for i in range(pixels):
@@ -49,7 +54,6 @@ def cfunction(i):
 def evalF(function,i,frame,length):
     return eval(function.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/20)-segment["time"])).replace("t",str(frame/20)))
 
-on = 0
 def getCurrentSegment():
     global on
 
@@ -65,11 +69,6 @@ def getCurrentSegment():
         lastSeg = seg
         on += 1
 
-segment = getCurrentSegment()
-
-my_font = pygame.font.SysFont('Comic Sans MS', 30)
-
-running = True
 while running:
     frame += 1
     time.sleep(.05)
@@ -83,7 +82,7 @@ while running:
     segment = getCurrentSegment()
     drawPixels(func=cfunction)
 
-    text_surface = my_font.render(str(on-1), False, (0, 0, 0))
+    text_surface = font.render(str(on-1), False, (0, 0, 0))
     screen.blit(text_surface, (0, 0))
 
     pygame.display.flip()

@@ -61,10 +61,9 @@
       "function": {
         "r": "255-(255*rt)",
         "g": "255-(255*rt)",
-        "b": "255-(255*rt)",
-        "wrapping": false
+        "b": "255-(255*rt)"
       },
-      "time": 8
+      "time": 9
     },
     {
       "function": {
