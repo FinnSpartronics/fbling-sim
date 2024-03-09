@@ -1,74 +1,79 @@
-[
-  {
-    "function": {
-      "r": "(((i+(len/2))*5)+(5*f))",
-      "g": "254-(i*5)-(5*f)",
-      "b": "0",
-      "wrapping": true
+{
+  "title": "Show",
+  "description": "Basic light show",
+  "version": 1,
+  "segments": [
+    {
+      "function": {
+        "r": "(((i+(len/2))*5)+(5*f))",
+        "g": "254-(i*5)-(5*f)",
+        "b": "0",
+        "wrapping": true
+      },
+      "time": 0
     },
-    "time": 0
-  },
-  {
-    "function": {
-      "r": "100",
-      "g": "100*(t-0)",
-      "b": "255",
-      "wrapping": true
+    {
+      "function": {
+        "r": "100",
+        "g": "100*(t-0)",
+        "b": "255",
+        "wrapping": true
+      },
+      "time": 3
     },
-    "time": 3
-  },
-  {
-    "function": {
-      "r": "255",
-      "g": "0",
-      "b": "0",
-      "wrapping": true
+    {
+      "function": {
+        "r": "255",
+        "g": "0",
+        "b": "0",
+        "wrapping": true
+      },
+      "time": 5
     },
-    "time": 5
-  },
-  {
-    "function": {
-      "r": "0",
-      "g": "255",
-      "b": "0",
-      "wrapping": true
+    {
+      "function": {
+        "r": "0",
+        "g": "255",
+        "b": "0",
+        "wrapping": true
+      },
+      "time": 6
     },
-    "time": 6
-  },
-  {
-    "function": {
-      "r": "0",
-      "g": "0",
-      "b": "255",
-      "wrapping": true
+    {
+      "function": {
+        "r": "0",
+        "g": "0",
+        "b": "255",
+        "wrapping": true
+      },
+      "time": 7
     },
-    "time": 7
-  },
-  {
-    "function": {
-      "r": "255",
-      "g": "255",
-      "b": "255",
-      "wrapping": true
+    {
+      "function": {
+        "r": "255",
+        "g": "255",
+        "b": "255",
+        "wrapping": true
+      },
+      "time": 8
     },
-    "time": 8
-  },
-  {
-    "function": {
-      "r": "255-(255*rt)",
-      "g": "255-(255*rt)",
-      "b": "255-(255*rt)",
-      "wrapping": false
+    {
+      "function": {
+        "r": "255-(255*rt)",
+        "g": "255-(255*rt)",
+        "b": "255-(255*rt)",
+        "wrapping": false
+      },
+      "time": 8
     },
-    "time": 8
-  },
-  {
-    "function": {
-      "r": "100",
-      "g": "50",
-      "b": "50",
-      "wrapping": false
-    },
-    "time": 10
-  }
-]
+    {
+      "function": {
+        "r": "100",
+        "g": "50",
+        "b": "50",
+        "wrapping": false
+      },
+      "time": 10
+    }
+  ]
+}

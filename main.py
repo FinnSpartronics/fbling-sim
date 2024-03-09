@@ -5,7 +5,7 @@ screen = pygame.display.set_mode([900, 100])
 pygame.display.set_caption("Bling")
 
 with open('show.json') as f:
-    show = json.load(f)
+    show = json.load(f)["segments"]
 
 pixelCount = 50
 frame = 0

@@ -1,5 +1,6 @@
 #[Name]
 #[Description]
+#[Version]
 {function}(params):             To call a function:
     ret {x}                     $[name]([params])
 
