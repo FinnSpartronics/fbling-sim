@@ -1,0 +1,10 @@
+#[Name]
+#[Description]
+{function}(params):
+    ret {x}
+
+-[time start]
+[r function]
+[g function]
+[b function]
+wrap                            include if you want wrapping otherwise omit this
