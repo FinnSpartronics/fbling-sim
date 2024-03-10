@@ -15,6 +15,10 @@ show = conversions.convertfBlingJson()
 pygame.display.set_caption(f"fBling Sim - {show['title']} - {show['description']} - fBling v{show['version']}")
 show = show["segments"]
 
+with open('config.json') as f:
+    config = json.load(f)
+debugMode = config["DEBUG"]
+
 def drawPixels(func, pixels = pixelCount):
     pw = screen.get_width()/pixels
     for i in range(pixels):
@@ -95,9 +99,10 @@ while running:
     segment = getCurrentSegment()
     drawPixels(func=cfunction)
 
-    drawText(screen, font, f"{on-1}", (0,0,0), (255,255,255), (5,0))                                   # Segment on
-    drawText(screen, fontsmall, f"{frame}", (0,0,0), (255,255,255), (5,60), outlineSize=1)             # Frame on
-    drawText(screen, fontsmall, f"{frame/20}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
+    if debugMode:
+        drawText(screen, font, f"{on-1}", (0,0,0), (255,255,255), (5,0))                                   # Segment on
+        drawText(screen, fontsmall, f"{frame}", (0,0,0), (255,255,255), (5,60), outlineSize=1)             # Frame on
+        drawText(screen, fontsmall, f"{frame/20}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
 
     pygame.display.flip()
 
