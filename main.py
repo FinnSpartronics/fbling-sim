@@ -18,13 +18,20 @@ with open('config.json') as f:
     config = json.load(f)
 debugMode = config["DEBUG"]
 
-if config["FRAME"]: screen = pygame.display.set_mode([900, 100])
-else: screen = pygame.display.set_mode([900, 100], pygame.NOFRAME)
+screenWidth = 900
+if config["FRAME"]:
+    screen = pygame.display.set_mode([screenWidth, 100])
+else:
+    screen = pygame.display.set_mode([screenWidth+8, 108], pygame.NOFRAME)
 
 def drawPixels(func, pixels = pixelCount):
-    pw = screen.get_width()/pixels
-    for i in range(pixels):
-        pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(pw*(i),0,pw,100))
+    pw = screenWidth/pixels
+    if config["FRAME"]:
+        for i in range(pixels):
+            pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(pw*(i),0,pw,100))
+    else:
+        for i in range(pixels):
+            pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(4+(pw*(i)),4,pw,100))
 
 def clamp(a,mi,ma):
     return min(max(a,mi),ma)
@@ -114,7 +121,7 @@ while running:
             if pygame.key.get_pressed()[pygame.K_ESCAPE]:
                 running = False
 
-    screen.fill((255, 255, 255))
+    screen.fill((0, 0, 0))
 
     segment = getCurrentSegment()
     drawPixels(func=cfunction)

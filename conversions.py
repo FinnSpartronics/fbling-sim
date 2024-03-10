@@ -9,6 +9,8 @@ def convertfBlingJson():
     i = 0
     for ln in lines:
         lines[i] = ln.replace("\n", "").strip()
+        if "//" in lines[i]:
+            lines[i] = lines[i][0:lines[i].index("//")].strip()
         i += 1
 
     # Finds header info (Title, Description, Version)

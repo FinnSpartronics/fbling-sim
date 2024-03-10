@@ -1,9 +1,9 @@
 #Example Show
 #A fun light show with advanced and simple functions
 #1
--0
+-0 // Starting
     abs(sin(t))*255
-    abs(sin(t))*255
+    abs(sin(t))*255 // Fade in from black
     abs(sin(t))*255
     wrap
 -1
@@ -78,13 +78,33 @@
     0
     0
     wrap
--5.5
+-5.5 // Rainbow
     360*(i/(len*3))
     min(100*rt*4, 100)
     min(100*rt*4, 100)
     wrap usehsv
--5.75
+-5.75 // Moving Rainbow
     360*((i+(50*rt))/(len*max(3-rt, .5)))
     100
     100
     usehsv wrap
+-8 // White fade to red
+    255
+    255-(200*rt)
+    255-(80*rt)
+-9 // White fade to green
+    255-(200*rt)
+    255
+    255-(80*rt)
+-10 // White fade to blue
+    255-(200*rt)
+    255-(80*rt)
+    255
+-11 // TODO: Change to Spartronics Yellow
+    200
+    200
+    0
+-12 // Todo: Change to Spartronics Blue
+    0
+    20
+    220

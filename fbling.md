@@ -44,7 +44,7 @@ A random function is an intended feature in the future.
 
 Uppercase and lowercase does not matter in fBling functions, but are taken into account for Names and Descriptions.
 
-Comments are coming soon but when they are implemented they will use the `//` comment format like in Java, Javascript, C, and others.
+To add a comment to your fBling, use the `//` like in Java, Javascript, C, and other languages. Multi-line comments, `/* */` are not yet supported.
 
 pi and e are evaluated to the 5th decimal place.
 
