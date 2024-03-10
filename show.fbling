@@ -79,12 +79,12 @@
     0
     wrap
 -5.5
-    360*(i/len)
+    360*(i/(len*3))
     min(100*rt*4, 100)
     min(100*rt*4, 100)
     wrap usehsv
 -5.75
-    360*((i+(10*rt))/len)
+    360*((i+(50*rt))/(len*max(3-rt, .5)))
     100
     100
     usehsv wrap

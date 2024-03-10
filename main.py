@@ -1,7 +1,6 @@
 import pygame, time, json, conversions, math, colorsys
 pygame.init()
 
-screen = pygame.display.set_mode([900, 100])
 font = pygame.font.SysFont('Comic Sans MS', 24)
 fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
@@ -18,6 +17,9 @@ show = show["segments"]
 with open('config.json') as f:
     config = json.load(f)
 debugMode = config["DEBUG"]
+
+if config["FRAME"]: screen = pygame.display.set_mode([900, 100])
+else: screen = pygame.display.set_mode([900, 100], pygame.NOFRAME)
 
 def drawPixels(func, pixels = pixelCount):
     pw = screen.get_width()/pixels
@@ -108,6 +110,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                running = False
 
     screen.fill((255, 255, 255))
 
