@@ -64,7 +64,9 @@ def convertfBlingJson():
     segments = []
     partOn = ReadPartOn.INIT
     currentSeg = {}
+    goto = False
     for l in lines[verIndex+1:]:
+        goto = False
         if (partOn == ReadPartOn.INIT or partOn == ReadPartOn.SEARCHING) and l.startswith("-"):
             if partOn == ReadPartOn.SEARCHING:
                 segments.append(Segment(time=currentSeg["time"],
@@ -76,8 +78,19 @@ def convertfBlingJson():
             currentSeg = {"time": float(l[1:].strip())}
             partOn = ReadPartOn.RED
         elif partOn == ReadPartOn.RED:
-            currentSeg["red"] = l
-            partOn = ReadPartOn.GREEN
+            if "goto" in l:
+                currentSeg["goto"] = float(l[4:].strip())
+                segments.append(currentSeg)
+                goto = True
+                partOn = ReadPartOn.INIT
+            elif "gofo" in l:
+                currentSeg["goto"] = float(l[4:].strip())/20
+                segments.append(currentSeg)
+                goto = True
+                partOn = ReadPartOn.INIT
+            else:
+                currentSeg["red"] = l
+                partOn = ReadPartOn.GREEN
         elif partOn == ReadPartOn.GREEN:
             currentSeg["green"] = l
             partOn = ReadPartOn.BLUE
@@ -87,12 +100,13 @@ def convertfBlingJson():
         elif partOn == ReadPartOn.SEARCHING:
             if "wrap" in l: currentSeg["wrap"] = True
             if "usehsv" in l: currentSeg["hsv"] = True
-    segments.append(Segment(time=currentSeg["time"],
-                            rFunc=currentSeg["red"],
-                            gFunc=currentSeg["green"],
-                            bFunc=currentSeg["blue"],
-                            wrap="wrap" in currentSeg,
-                            useHSV="hsv" in currentSeg).dict())
+    if not(goto):
+        segments.append(Segment(time=currentSeg["time"],
+                                rFunc=currentSeg["red"],
+                                gFunc=currentSeg["green"],
+                                bFunc=currentSeg["blue"],
+                                wrap="wrap" in currentSeg,
+                                useHSV="hsv" in currentSeg).dict())
 
     # Final Composition
     json = {

@@ -50,6 +50,7 @@ pi and e are evaluated to the 5th decimal place.
 
 By default, fBling uses RGB255 values, but by adding `usehsv` at the end, you can use HSV values instead.
 
+
 | HSV | Expected Values|
 | --- | --- |
 | Hue | 0-360 |
@@ -57,6 +58,18 @@ By default, fBling uses RGB255 values, but by adding `usehsv` at the end, you ca
 | Value | 0-100 |
 
 `wrap` and `usehsv` do not need to be on separate lines.
+
+At the end, your final segment can be simply: `goto x` where x is a time period to loop back to.\
+For example, to restart after a 10 second show:
+```fBling
+-10
+    goto 0
+```
+You may also use `gofo x` to go to a specific frame.\
+`goto` and `gofo` both allow calculations such as 10/2, but not variables. \
+Rounding is automatically applied, as you cannot be in a partial frame, as FRC robots update 20 times a second. \
+Do not attempt to go beyond the end, as that will cause issues! \
+As of now, you can only put `goto` and `gofo` as the final segment, but it is in the plans to be able to put these anywhere.
 
 ####3.1 Variables
 | Variable Name | Brief Description |

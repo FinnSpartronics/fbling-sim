@@ -87,7 +87,7 @@ def evalF(function,i,frame,length):
     return eval(f)
 
 def getCurrentSegment():
-    global on
+    global on, frame
 
     sec = frame/20
     lastSeg = None
@@ -97,6 +97,10 @@ def getCurrentSegment():
         if sec < seg["time"]: return lastSeg
         if seg == show[-1]:
             on += 1
+            if "goto" in seg:
+                frame = max(math.floor(eval(str(seg["goto"])) * 20), 0)
+                print(f"Gone back to frame {frame} aka {frame/20}s")
+                return getCurrentSegment()
             return seg
         lastSeg = seg
         on += 1

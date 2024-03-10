@@ -101,10 +101,12 @@
     255-(80*rt)
     255
 -11 // TODO: Change to Spartronics Yellow
-    200
-    200
+    255
+    255
     0
 -12 // Todo: Change to Spartronics Blue
     0
     20
     220
+-13
+    goto0
