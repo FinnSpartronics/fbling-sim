@@ -1,11 +1,11 @@
-import pygame, time, json, conversions, math
+import pygame, time, json, conversions, math, colorsys
 pygame.init()
 
 screen = pygame.display.set_mode([900, 100])
 font = pygame.font.SysFont('Comic Sans MS', 24)
 fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
-pixelCount = 50
+pixelCount = 100
 frame = 0
 on = 0
 segment = None
@@ -30,7 +30,21 @@ def clamp(a,mi,ma):
 def clamp255(n):
     return clamp(n,0,255)
 
+def clamp1(n):
+    return clamp(n,0,1)
+
 def makeColorReal(c):
+    if "hsv" in segment["function"]:
+        if segment["function"]["hsv"]:
+            if "wrapping" in segment["function"]:
+                if segment["function"]["wrapping"]:
+                    def wrapClampHSV(x):
+                        if x == 0: return 0
+                        if x < 0:
+                            return (x - 0.000001) % 1
+                        return (x - 0.000001) % 1
+                    return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(wrapClampHSV(c[0]/360), wrapClampHSV(c[1]/100), wrapClampHSV(c[2]/100)))
+            return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(clamp1(c[0]/360), clamp1(c[1]/100), clamp1(c[2]/100)))
     if "wrapping" in segment["function"]:
         if segment["function"]["wrapping"]:
             def wrapClamp(x):
@@ -38,6 +52,7 @@ def makeColorReal(c):
                 if x < 0:
                     return int((x - 0.1) % 255)
                 return int((x - 0.1) % 255)
+
             return (wrapClamp(c[0]), wrapClamp(c[1]), wrapClamp(c[2]))
     return (int(clamp255(c[0])), int(clamp255(c[1])), int(clamp255(c[2])))
 

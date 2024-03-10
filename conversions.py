@@ -31,19 +31,21 @@ def convertfBlingJson():
     # Segments
 
     class Segment:
-        def __init__(self, time, rFunc, gFunc, bFunc, wrap):
+        def __init__(self, time, rFunc, gFunc, bFunc, wrap, useHSV):
             self.time = time
             self.r = rFunc
             self.g = gFunc
             self.b = bFunc
             self.wrap = wrap
+            self.hsv = useHSV
         def dict(self):
             return {
                 "function": {
                     "r": self.r,
                     "g": self.g,
                     "b": self.b,
-                    "wrapping": self.wrap
+                    "wrapping": self.wrap,
+                    "hsv": self.hsv,
                 },
                 "time": self.time
             }
@@ -67,7 +69,8 @@ def convertfBlingJson():
                                         rFunc=currentSeg["red"],
                                         gFunc=currentSeg["green"],
                                         bFunc=currentSeg["blue"],
-                                        wrap="wrap" in currentSeg).dict())
+                                        wrap="wrap" in currentSeg,
+                                        useHSV="hsv" in currentSeg).dict())
             currentSeg = {"time": float(l[1:].strip())}
             partOn = ReadPartOn.RED
         elif partOn == ReadPartOn.RED:
@@ -81,11 +84,13 @@ def convertfBlingJson():
             partOn = ReadPartOn.SEARCHING
         elif partOn == ReadPartOn.SEARCHING:
             if "wrap" in l: currentSeg["wrap"] = True
+            if "usehsv" in l: currentSeg["hsv"] = True
     segments.append(Segment(time=currentSeg["time"],
                             rFunc=currentSeg["red"],
                             gFunc=currentSeg["green"],
                             bFunc=currentSeg["blue"],
-                            wrap="wrap" in currentSeg).dict())
+                            wrap="wrap" in currentSeg,
+                            useHSV="hsv" in currentSeg).dict())
 
     # Final Composition
     json = {
@@ -95,21 +100,6 @@ def convertfBlingJson():
         "segments": segments,
     }
     return json
-
-def convertJsonfBling():
-    import json
-
-    with open('show.json') as f:
-        show = json.load(f)
-
-    data = f"#{show['title']}\n#{show['description']}\n#{show['version']}\n"
-    for seg in show["segments"]:
-        data = f"{data}-{seg['time']}\n   {seg['function']['r']}\n   {seg['function']['g']}\n   {seg['function']['b']}\n"
-        if "wrapping" in seg["function"] and seg["function"]["wrapping"]: data = f"{data}   wrap\n"
-
-    f = open("show2.fbling", "w")
-    f.write(data)
-    f.close()
 
 # Variable Characters:
 # i f t e

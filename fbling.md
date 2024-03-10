@@ -17,10 +17,11 @@ fBling files are the way fBling light shows are stored.
 #Description
 #Version Number
 -0                  // Time that segment begins
-    0               // Red function
-    0               // Green function
-    0               // Blue Function
+    0               // Red function (or hue)
+    0               // Green function (or saturation)
+    0               // Blue Function (or value)
     wrap            // Include if you want wrapping
+    usehsv          // Include if you want these functions to use hsv
 -1
 ...
 ```
@@ -46,6 +47,16 @@ Uppercase and lowercase does not matter in fBling functions, but are taken into 
 Comments are coming soon but when they are implemented they will use the `//` comment format like in Java, Javascript, C, and others.
 
 pi and e are evaluated to the 5th decimal place.
+
+By default, fBling uses RGB255 values, but by adding `usehsv` at the end, you can use HSV values instead.
+
+| HSV | Expected Values|
+| --- | --- |
+| Hue | 0-360 |
+| Saturation | 0-100 |
+| Value | 0-100 |
+
+`wrap` and `usehsv` do not need to be on separate lines.
 
 ####3.1 Variables
 | Variable Name | Brief Description |

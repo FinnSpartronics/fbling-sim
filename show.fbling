@@ -1,5 +1,5 @@
 #Example Show
-#A fun light show made with fBling using Math functions and almost every feature
+#A fun light show with advanced and simple functions
 #1
 -0
     abs(sin(t))*255
@@ -79,7 +79,12 @@
     0
     wrap
 -5.5
-    255-(255*rt*4)
-    255-(255*rt*4)
-    255-(255*rt*4)
-    wrap
+    360*(i/len)
+    min(100*rt*4, 100)
+    min(100*rt*4, 100)
+    wrap usehsv
+-5.75
+    360*((i+(10*rt))/len)
+    100
+    100
+    usehsv wrap
