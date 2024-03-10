@@ -1,9 +1,9 @@
-import pygame, time, json
+import pygame, time, json, conversions
 pygame.init()
 
 screen = pygame.display.set_mode([900, 100])
-pygame.display.set_caption("Bling")
-font = pygame.font.SysFont('Comic Sans MS', 30)
+font = pygame.font.SysFont('Comic Sans MS', 24)
+fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
 pixelCount = 50
 frame = 0
@@ -11,8 +11,9 @@ on = 0
 segment = None
 running = True
 
-with open('show.json') as f:
-    show = json.load(f)["segments"]
+show = conversions.convertfBlingJson()
+pygame.display.set_caption(f"fBling Sim - {show['title']} - {show['description']} - fBling v{show['version']}")
+show = show["segments"]
 
 def drawPixels(func, pixels = pixelCount):
     pw = screen.get_width()/pixels
@@ -69,6 +70,15 @@ def getCurrentSegment():
         lastSeg = seg
         on += 1
 
+def drawText(screen, font, text, color, outline, pos, outlineSize = 2):
+    surface = font.render(text, False, color)
+    outSurface = font.render(text, False, outline)
+    screen.blit(outSurface, (pos[0]+outlineSize,pos[1]+outlineSize))
+    screen.blit(outSurface, (pos[0]-outlineSize,pos[1]+outlineSize))
+    screen.blit(outSurface, (pos[0]-outlineSize,pos[1]-outlineSize))
+    screen.blit(outSurface, (pos[0]+outlineSize,pos[1]-outlineSize))
+    screen.blit(surface, pos)
+
 while running:
     frame += 1
     time.sleep(.05)
@@ -82,8 +92,9 @@ while running:
     segment = getCurrentSegment()
     drawPixels(func=cfunction)
 
-    text_surface = font.render(str(on-1), False, (0, 0, 0))
-    screen.blit(text_surface, (0, 0))
+    drawText(screen, font, f"{on-1}", (0,0,0), (255,255,255), (5,0))                                   # Segment on
+    drawText(screen, fontsmall, f"{frame}", (0,0,0), (255,255,255), (5,60), outlineSize=1)             # Frame on
+    drawText(screen, fontsmall, f"{frame/20}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
 
     pygame.display.flip()
 
