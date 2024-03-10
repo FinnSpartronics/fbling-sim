@@ -1,4 +1,4 @@
-import pygame, time, json, conversions
+import pygame, time, json, conversions, math
 pygame.init()
 
 screen = pygame.display.set_mode([900, 100])
@@ -53,7 +53,10 @@ def cfunction(i):
             evalF(segment["function"]["b"], i, frame, pixelCount))
 
 def evalF(function,i,frame,length):
-    return eval(function.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/20)-segment["time"])).replace("t",str(frame/20)))
+    f = conversions.convertToInternalMath(function)
+    f = (f.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/20)-segment["time"])).replace("t",str(frame/20)))
+    f = conversions.convertBackToReal(f)
+    return eval(f)
 
 def getCurrentSegment():
     global on

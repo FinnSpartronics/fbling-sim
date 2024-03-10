@@ -1,4 +1,4 @@
-#fBling
+#fBling v1
 ###1 - What is fBling?
 fBling (Finn's Bling) lets you write light shows to be replayed by an AddressableLED to add some Bling to your FRC robots.
 
@@ -24,9 +24,29 @@ fBling files are the way fBling light shows are stored.
 -1
 ...
 ```
-fBling is primarily based around newlines.\
+fBling's syntax is primarily based around lines.\
 The header, the first three lines, contains the name, description, and version number, respectively. They must start with a #.
 Indentation is not required but suggested to help improve readability.
+
+Most Javascript Math functions are included for use in fBling, but only if a python equivalent is also there.\
+[Example] To use acos, just type:
+`acos(0)` where 0 can be whatever number you want.\
+Missing functions are:
+- cbrt
+- clz32
+- fround
+- imul
+- random
+- sign
+
+A random function is an intended feature in the future.
+
+Uppercase and lowercase does not matter in fBling functions, but are taken into account for Names and Descriptions.
+
+Comments are coming soon but when they are implemented they will use the `//` comment format like in Java, Javascript, C, and others.
+
+pi and e are evaluated to the 5th decimal place.
+
 ####3.1 Variables
 | Variable Name | Brief Description |
 | --- | --- |
@@ -35,3 +55,5 @@ Indentation is not required but suggested to help improve readability.
 | len | The length of the light strip. default: 50 |
 | t | The current time in seconds |
 | rt | The time since the current segment began |
+| pi | 3.14159 |
+| e | 2.71828 |
