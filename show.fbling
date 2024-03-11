@@ -1,9 +1,9 @@
 #Example Show
 #A fun light show with advanced and simple functions
 #1
--0 // Starting
+-0 // Start - Fade in from black
     abs(sin(t))*255
-    abs(sin(t))*255 // Fade in from black
+    abs(sin(t))*255
     abs(sin(t))*255
     wrap
 -1
@@ -101,12 +101,12 @@
     255-(80*rt)
     255
 -11 // TODO: Change to Spartronics Yellow
-    255
-    255
+    244
+    228
     0
 -12 // Todo: Change to Spartronics Blue
     0
-    20
-    220
+    103
+    185
 -13
     goto0
