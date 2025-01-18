@@ -1,0 +1,79 @@
+#Assembly Show
+#Made for 2024 Spring Recognition Assembly
+#1
+-0 // Fade from black
+    abs(sin(t*2.5*2))*255
+    abs(sin(t*2.5*2))*255
+    abs(sin(t*2.5*2))*255
+    wrap
+-1 // Fade to black
+    255 - abs(sin(t*2.5*2))*255
+    255 - abs(sin(t*2.5*2))*255
+    255 - abs(sin(t*2.5*2))*255
+    wrap
+-2
+    sin(100 * (i + rt))*255
+    sin(100 * (i + rt))*255
+    0
+-3
+    0
+    sin(100 * (i + rt))*100
+    sin(100 * (i + rt))*255
+-4
+    360*((i + (t * 100)) / len)
+    100
+    100
+    usehsv
+    usewrap
+-6
+    360*((i + (-t * 100)) / len)
+    100
+    100
+    usehsv
+    wrap
+-8
+    360*((i + (-t * 100)) / len)
+    100-(100 * rt)
+    100
+    usehsv
+    wrap
+-9 // Spartronics Yellow
+    252
+    255
+    0
+-10 // blue
+    20
+    85
+    251
+-11
+    360 * rt
+    100
+    100
+    usehsv
+    wrap
+-13
+    255
+    0
+    0
+-13.5
+    0
+    255
+    0
+-14
+    0
+    0
+    255
+-15
+    rt * 255 * (i/len)
+    0
+    0
+-16
+    0
+    255 - (rt * 255 * (i/len))
+    0
+-17
+    0
+    0
+    rt * 255 * (i/len)
+-18
+    gofo 0

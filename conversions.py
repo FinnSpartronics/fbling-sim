@@ -1,8 +1,8 @@
 from enum import Enum
 
-def convertfBlingJson():
+def convertfBlingJson(filename):
     # Read file
-    with open('show.fbling') as f:
+    with open(filename) as f:
         lines = f.readlines()
 
     # Strips the lines

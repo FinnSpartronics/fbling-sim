@@ -4,13 +4,12 @@ pygame.init()
 font = pygame.font.SysFont('Comic Sans MS', 24)
 fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
-pixelCount = 100
 frame = 0
 on = 0
 segment = None
 running = True
 
-show = conversions.convertfBlingJson()
+show = conversions.convertfBlingJson('show2.fbling')
 pygame.display.set_caption(f"fBling Sim - {show['title']} - {show['description']} - fBling v{show['version']}")
 show = show["segments"]
 
@@ -18,20 +17,24 @@ with open('config.json') as f:
     config = json.load(f)
 debugMode = config["DEBUG"]
 
-screenWidth = 900
+pixelCount = config["LENGTH"]
+led_width = config["LED_WIDTH"]
+height = config["LED_HEIGHT"]
+
+screenWidth = pixelCount*led_width
 if config["FRAME"]:
-    screen = pygame.display.set_mode([screenWidth, 100])
+    screen = pygame.display.set_mode([screenWidth, height])
 else:
-    screen = pygame.display.set_mode([screenWidth+8, 108], pygame.NOFRAME)
+    screen = pygame.display.set_mode([screenWidth+8, height+8], pygame.NOFRAME)
 
 def drawPixels(func, pixels = pixelCount):
-    pw = screenWidth/pixels
+    pw = led_width
     if config["FRAME"]:
         for i in range(pixels):
-            pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(pw*(i),0,pw,100))
+            pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(pw*(i),0,pw,height))
     else:
         for i in range(pixels):
-            pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(4+(pw*(i)),4,pw,100))
+            pygame.draw.rect(screen, makeColorReal(func(i)), pygame.Rect(4+(pw*(i)),4,pw,height))
 
 def clamp(a,mi,ma):
     return min(max(a,mi),ma)
@@ -82,14 +85,14 @@ def cfunction(i):
 
 def evalF(function,i,frame,length):
     f = conversions.convertToInternalMath(function)
-    f = (f.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/20)-segment["time"])).replace("t",str(frame/20)))
+    f = (f.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/50)-segment["time"])).replace("t",str(frame/50)))
     f = conversions.convertBackToReal(f)
     return eval(f)
 
 def getCurrentSegment():
     global on, frame
 
-    sec = frame/20
+    sec = frame/50
     lastSeg = None
 
     on = 0
@@ -98,8 +101,8 @@ def getCurrentSegment():
         if seg == show[-1]:
             on += 1
             if "goto" in seg:
-                frame = max(math.floor(eval(str(seg["goto"])) * 20), 0)
-                print(f"Gone back to frame {frame} aka {frame/20}s")
+                frame = max(math.floor(eval(str(seg["goto"])) * 50), 0)
+                print(f"Gone back to frame {frame} aka {frame/50}s")
                 return getCurrentSegment()
             return seg
         lastSeg = seg
@@ -114,9 +117,41 @@ def drawText(screen, font, text, color, outline, pos, outlineSize = 2):
     screen.blit(outSurface, (pos[0]+outlineSize,pos[1]-outlineSize))
     screen.blit(surface, pos)
 
+def export():
+    arr = []
+    global frame, segment
+    lastFrame = 0
+    while True:
+        segment = getCurrentSegment()
+        if not(lastFrame == frame): break
+        currArray = []
+        for i in range(pixelCount):
+            currArray.append(makeColorReal(cfunction(i)))
+        arr.append(currArray)
+        frame += 1
+        lastFrame = frame
+
+    str = ""
+    for frameArr in arr:
+        for px in frameArr:
+            for c in px:
+                str = f"{str}{c},"
+        str = str.removesuffix(",") + " "
+
+
+    f = open("export.bling", "w")
+    print("Exported")
+    f.write(str.removesuffix(" "))
+    f.close()
+
+#drawText(screen, font, "Exporting", (255,255,255), (50,50))
+if config["EXPORT"]:
+    export()
+else: print("no export")
+
 while running:
     frame += 1
-    time.sleep(.05)
+    time.sleep(1/50)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -133,7 +168,7 @@ while running:
     if debugMode:
         drawText(screen, font, f"{on-1}", (0,0,0), (255,255,255), (5,0))                                   # Segment on
         drawText(screen, fontsmall, f"{frame}", (0,0,0), (255,255,255), (5,60), outlineSize=1)             # Frame on
-        drawText(screen, fontsmall, f"{frame/20}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
+        drawText(screen, fontsmall, f"{frame/50}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
 
     pygame.display.flip()
 

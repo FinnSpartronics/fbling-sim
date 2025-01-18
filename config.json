@@ -1,4 +1,8 @@
 {
   "DEBUG": false,
-  "FRAME": false
+  "FRAME": false,
+  "LENGTH": 21,
+  "LED_WIDTH": 4,
+  "LED_HEIGHT": 100,
+  "EXPORT": true
 }
