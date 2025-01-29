@@ -9,7 +9,7 @@ on = 0
 segment = None
 running = True
 
-show = conversions.convertfBlingJson('show2.fbling')
+show = conversions.convertfBlingJson('show.fbling')
 pygame.display.set_caption(f"fBling Sim - {show['title']} - {show['description']} - fBling v{show['version']}")
 show = show["segments"]
 
@@ -139,7 +139,7 @@ def export():
         str = str.removesuffix(",") + " "
 
 
-    f = open("export.bling", "w")
+    f = open(f"export{pixelCount}.bling", "w")
     print("Exported")
     f.write(str.removesuffix(" "))
     f.close()

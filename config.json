@@ -4,5 +4,5 @@
   "LENGTH": 21,
   "LED_WIDTH": 4,
   "LED_HEIGHT": 100,
-  "EXPORT": true
+  "EXPORT": false
 }
