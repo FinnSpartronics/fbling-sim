@@ -4,7 +4,7 @@ pygame.init()
 font = pygame.font.SysFont('Comic Sans MS', 24)
 fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
-frame = 8 * 50
+frame = 0
 on = 0
 segment = None
 running = True
@@ -123,31 +123,31 @@ def drawText(screen, font, text, color, outline, pos, outlineSize = 2):
     screen.blit(surface, pos)
 
 def export():
-    arr = []
     global frame, segment
     lastFrame = 0
+
+    arr1 = []
     while True:
         segment = getCurrentSegment()
         if not(lastFrame == frame): break
         currArray = []
         for i in range(pixelCount):
-            currArray.append(makeColorReal(cfunction(i)))
-        arr.append(currArray)
+            for c in makeColorReal(cfunction(i)):
+                currArray.append(max(min(c,255),1))
+        arr1.append(currArray)
         frame += 1
         lastFrame = frame
 
-    str = ""
-    for frameArr in arr:
-        for px in frameArr:
-            for c in px:
-                str = f"{str}{c},"
-        str = str.removesuffix(",") + " "
+    arr = []
+    for x in arr1:
+        for x1 in x:
+            arr.append(x1)
+        arr.append(0)
 
-
-    f = open(f"export{pixelCount}.bling", "w")
-    print("Exported")
-    f.write(str.removesuffix(" "))
+    f = open(f"export{pixelCount}.bling", "wb")
+    f.write(bytes(arr))
     f.close()
+    print("Exported")
 
 #drawText(screen, font, "Exporting", (255,255,255), (50,50))
 if config["EXPORT"]:
