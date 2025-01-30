@@ -1,10 +1,10 @@
-import pygame, time, json, conversions, math, colorsys
+import pygame, time, json, conversions, math, colorsys, random
 pygame.init()
 
 font = pygame.font.SysFont('Comic Sans MS', 24)
 fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
-frame = 0
+frame = 8 * 50
 on = 0
 segment = None
 running = True
@@ -84,20 +84,25 @@ def cfunction(i):
             evalF(segment["function"]["b"], i, frame, pixelCount))
 
 def evalF(function,i,frame,length):
+    getCurrentSegment()
+    random.seed((segmentIndex * 2001) + i)
     f = conversions.convertToInternalMath(function)
     f = (f.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/50)-segment["time"])).replace("t",str(frame/50)))
     f = conversions.convertBackToReal(f)
     return eval(f)
 
+segmentIndex = 0
 def getCurrentSegment():
-    global on, frame
+    global on, frame, segmentIndex
 
     sec = frame/50
     lastSeg = None
 
     on = 0
     for seg in show:
-        if sec < seg["time"]: return lastSeg
+        if sec < seg["time"]:
+            segmentIndex = show.index(seg)
+            return lastSeg
         if seg == show[-1]:
             on += 1
             if "goto" in seg:

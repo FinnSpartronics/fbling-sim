@@ -1,4 +1,5 @@
 from enum import Enum
+import random
 
 def convertfBlingJson(filename):
     # Read file
@@ -152,7 +153,8 @@ conversionTable = {
     "sqrt": "math.sqrt",
     "tan": "math.tan",
     "tanh": "math.tanh",
-    "trunc": "math.trunc"
+    "trunc": "math.trunc",
+    "random": "random.random",
 }
 conversionTableInt = {
     "abs": "m001",
@@ -184,6 +186,9 @@ conversionTableInt = {
     "tan": "m027",
     "tanh": "m028",
     "trunc": "m029",
+    "random": "m030",
+    "if": "m031",
+    "else": "m032"
 }
 
 def convertToInternalMath(string):

@@ -37,7 +37,6 @@ Missing functions are:
 - clz32
 - fround
 - imul
-- random
 - sign
 
 A random function is an intended feature in the future.
@@ -51,11 +50,11 @@ pi and e are evaluated to the 5th decimal place.
 By default, fBling uses RGB255 values, but by adding `usehsv` at the end, you can use HSV values instead.
 
 
-| HSV | Expected Values|
-| --- | --- |
-| Hue | 0-360 |
-| Saturation | 0-100 |
-| Value | 0-100 |
+| HSV | Expected Values |
+| --- |-----------------|
+| Hue | 0-360           |
+| Saturation | 0-100           |
+| Value | 0-100           |
 
 `wrap` and `usehsv` do not need to be on separate lines.
 
@@ -71,13 +70,14 @@ Rounding is automatically applied, as you cannot be in a partial frame, as FRC r
 Do not attempt to go beyond the end, as that will cause issues! \
 As of now, you can only put `goto` and `gofo` as the final segment, but it is in the plans to be able to put these anywhere.
 
-####3.1 Variables
-| Variable Name | Brief Description |
-| --- | --- |
-| i | The pixel number|
-| f | The current frame. fBling runs at 20fps |
+#### 3.1 Variables
+
+| Variable Name | Brief Description                          |
+| --- |--------------------------------------------|
+| i | The pixel number                           |
+| f | The current frame. fBling runs at 50fps    |
 | len | The length of the light strip. default: 50 |
-| t | The current time in seconds |
-| rt | The time since the current segment began |
-| pi | 3.14159 |
-| e | 2.71828 |
+| t | The current time in seconds                |
+| rt | The time since the current segment began   |
+| pi | 3.14159                                    |
+| e | 2.71828                                    |
