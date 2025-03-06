@@ -1,8 +1,9 @@
 {
   "DEBUG": false,
   "FRAME": false,
-  "LENGTH": 21,
+  "LENGTH": 47,
   "LED_WIDTH": 30,
   "LED_HEIGHT": 500,
-  "EXPORT": false
+  "EXPORT": false,
+  "SHOW_NAME": "rainbow"
 }

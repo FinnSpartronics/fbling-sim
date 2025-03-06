@@ -6,16 +6,17 @@ fontsmall = pygame.font.SysFont('Comic Sans MS', 16)
 
 frame = 0
 on = 0
+fps = 50 / 5
 segment = None
 running = True
-
-show = conversions.convertfBlingJson('show.fbling')
-pygame.display.set_caption(f"fBling Sim - {show['title']} - {show['description']} - fBling v{show['version']}")
-show = show["segments"]
 
 with open('config.json') as f:
     config = json.load(f)
 debugMode = config["DEBUG"]
+
+show = conversions.convertfBlingJson(f'shows/{config["SHOW_NAME"]}.fbling')
+pygame.display.set_caption(f"fBling Sim - {show['title']} - {show['description']} - fBling v{show['version']}")
+show = show["segments"]
 
 pixelCount = config["LENGTH"]
 led_width = config["LED_WIDTH"]
@@ -87,7 +88,7 @@ def evalF(function,i,frame,length):
     getCurrentSegment()
     random.seed((segmentIndex * 2001) + i)
     f = conversions.convertToInternalMath(function)
-    f = (f.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/50)-segment["time"])).replace("t",str(frame/50)))
+    f = (f.replace("i",str(i)).replace("f",str(frame)).replace("len",str(length)).replace("rt",str((frame/fps)-segment["time"])).replace("t",str(frame/fps)))
     f = conversions.convertBackToReal(f)
     return eval(f)
 
@@ -95,7 +96,7 @@ segmentIndex = 0
 def getCurrentSegment():
     global on, frame, segmentIndex
 
-    sec = frame/50
+    sec = frame/fps
     lastSeg = None
 
     on = 0
@@ -106,8 +107,8 @@ def getCurrentSegment():
         if seg == show[-1]:
             on += 1
             if "goto" in seg:
-                frame = max(math.floor(eval(str(seg["goto"])) * 50), 0)
-                print(f"Gone back to frame {frame} aka {frame/50}s")
+                frame = max(math.floor(eval(str(seg["goto"])) * fps), 0)
+                print(f"Gone back to frame {frame} aka {frame/fps}s")
                 return getCurrentSegment()
             return seg
         lastSeg = seg
@@ -144,7 +145,7 @@ def export():
             arr.append(x1)
         arr.append(0)
 
-    f = open(f"export{pixelCount}.bling", "wb")
+    f = open(f"outputs/{config['SHOW_NAME']}{pixelCount}.bling", "wb")
     f.write(bytes(arr))
     f.close()
     print("Exported")
@@ -156,7 +157,7 @@ else: print("no export")
 
 while running:
     frame += 1
-    time.sleep(1/50)
+    time.sleep(1/fps)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -173,7 +174,7 @@ while running:
     if debugMode:
         drawText(screen, font, f"{on-1}", (0,0,0), (255,255,255), (5,0))                                   # Segment on
         drawText(screen, fontsmall, f"{frame}", (0,0,0), (255,255,255), (5,60), outlineSize=1)             # Frame on
-        drawText(screen, fontsmall, f"{frame/50}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
+        drawText(screen, fontsmall, f"{frame/fps}s", (0,0,0), (255,255,255), (5,80), outlineSize=1)         # Time
 
     pygame.display.flip()
 
